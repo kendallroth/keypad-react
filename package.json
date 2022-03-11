@@ -16,6 +16,7 @@
     "format": "prettier --write \"{src,test}/**/*.ts\"",
     "lint": "eslint \"{src,test}/**/*.ts\"",
     "prepare": "husky install",
+    "prepublish": "npm run lint && npm run test && npm run build",
     "test": "jest --config ./config/jest.config.ts --verbose",
     "test:cover": "npm run test -- --coverage",
     "types:check": "tsc"
