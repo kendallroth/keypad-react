@@ -1,0 +1,75 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 16px 32px;
+  border-top: 2px solid lightgrey;
+}
+
+.app-actions > .button {
+  margin-left: 16px;
+}
+
+.app-actions__values {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: auto;
+}
+
+.app-actions__values > :not(:first-child) {
+  margin-top: 8px;
+}
+
+.app-actions__value {
+  padding: 4px 6px;
+  font-size: 16px;
+  font-family: monospace;
+  background-color: #efefef;
+  border-radius: 4px;
+}
+
+/* Elements */
+.button {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  font-size: 16px;
+  border: 1px solid grey;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.button[disabled],
+.input[disabled] {
+  cursor: not-allowed;
+}
+
+.input {
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid grey;
+  border-radius: 100px;
+}
