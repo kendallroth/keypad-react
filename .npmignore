@@ -6,12 +6,14 @@ package-lock.json
 coverage
 test
 
-# Files
+# Directories
+config
 example
 src
+
+# Files
 .eslintrc.js
 .gitignore
 .prettierrc
 CHANGELOG.md
-rollup.config.ts
 tsconfig*
