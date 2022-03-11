@@ -60,6 +60,8 @@ const formatNumber = (number: string | number, decimals = 2, options = {}) => {
  * @returns Parsed number and validity
  */
 const parseNumberSafe = (input: string | number, maxDecimals = 2): SafeParsedNumber => {
+  if (!input || isNaN(Number(input))) return [0, false];
+
   try {
     let stringValue = `${input}`;
     // NOTE: Cannot use 'toFixed()' as this rounds decimals if necessary (undesired)!
