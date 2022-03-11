@@ -1,5 +1,5 @@
 import React, { forwardRef, useState } from "react";
-import { IKeypadRef, useKeypad } from "@kendallroth/keypad-react";
+import { IKeypadFlags, IKeypadRef, useKeypad } from "@kendallroth/keypad-react";
 
 // Components
 import KeypadDisplay from "./KeypadDisplay";
@@ -18,7 +18,7 @@ const Keypad = forwardRef<IKeypadRef, Props>((props, ref) => {
   const { decimals = 0, disabled = false, onChange } = props;
 
   const [valueString, setValueString] = useState("");
-  const hasValue = Boolean(valueString) && valueString !== "0";
+  const [flags, setFlags] = useState<IKeypadFlags | null>(null);
 
   const maxDigits = 5;
   const maxValue = 99999;
@@ -28,25 +28,26 @@ const Keypad = forwardRef<IKeypadRef, Props>((props, ref) => {
     maxDigits,
     maxValue,
     ref,
-    onChange: (value, valueString) => {
+    onChange: (value, valueString, flags) => {
       // Use the raw string locally for display purposes, and pass the
       //   parsed value to the parent.
       setValueString(valueString);
       onChange(value, valueString);
+      setFlags(flags);
     }
   });
 
   return (
     <div className="keypad">
       <KeypadDisplay
-        decimals
+        decimals={decimals}
         value={valueString}
-        onReset={hasValue ? reset : undefined}
+        onReset={flags?.hasValue ? reset : undefined}
       />
       <KeypadKeys
-        decimalDisabled={valueString.indexOf(".") > 0}
-        deleteDisabled={!hasValue}
-        // TODO: Determine if disabling digits is worthwhile???
+        decimalDisabled={!decimals || flags?.hasDecimal}
+        deleteDisabled={!flags?.hasValue}
+        digitsDisabled={flags?.hasMaxWholeDigits || flags?.hasMaxDecimalDigits}
         disabled={disabled}
         onKey={onKey}
       />

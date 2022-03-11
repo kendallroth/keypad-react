@@ -55,6 +55,7 @@ export default function App() {
         </div>
         <input
           className="input"
+          placeholder="Value"
           type="number"
           value={inputValue}
           onChange={onInputChange}

@@ -1,4 +1,33 @@
-type ParsedNumber = [value: number, valid: boolean];
+import { IFlagCalculationConfig, IKeypadFlags } from "./keypad.types";
+
+/** Safely parsed number (value and validity) */
+type SafeParsedNumber = [value: number, valid: boolean];
+
+/**
+ * Calculate keypad value flags
+ *
+ * @param   value  - Keypad value string
+ * @param   config - Calculation config
+ * @returns Keypad value flags
+ */
+const calculateFlags = (value: string, config?: IFlagCalculationConfig): IKeypadFlags => {
+  const inputParts = value.split(".");
+  const hasValue = Boolean(value) && value !== "0";
+  const enteredWholeDigits = inputParts[0]?.length ?? 0;
+  const enteredDecimalDigits = inputParts[1]?.length ?? 0;
+
+  return {
+    enteredDecimalDigits,
+    enteredWholeDigits,
+    hasDecimal: value.includes("."),
+    // hasMaxDecimalDigits: enteredDecimalDigits >= (config?.maxDecimalDigits ?? 0),
+    hasMaxDecimalDigits: config?.maxDecimalDigits
+      ? enteredDecimalDigits >= config.maxDecimalDigits
+      : false,
+    hasMaxWholeDigits: config?.maxWholeDigits ? enteredWholeDigits >= config.maxWholeDigits : false,
+    hasValue,
+  };
+};
 
 /**
  * Format a number
@@ -27,11 +56,13 @@ const formatNumber = (number: string | number, decimals = 2, options = {}) => {
 /**
  * Safely parse a numeric string
  *
+ * NOTE: Will round the decimal places if necessary (when dropping places)!
+ *
  * @param   input       - Numeric input string
  * @param   maxDecimals - Maximum decimal places
  * @returns Parsed number and validity
  */
-const parseNumberSafe = (input: string | number, maxDecimals = 2): ParsedNumber => {
+const parseNumberSafe = (input: string | number, maxDecimals = 2): SafeParsedNumber => {
   try {
     const rawValue = parseFloat(`${input}`);
     const value = parseFloat(rawValue.toFixed(maxDecimals));
@@ -41,4 +72,4 @@ const parseNumberSafe = (input: string | number, maxDecimals = 2): ParsedNumber 
   }
 };
 
-export { formatNumber, parseNumberSafe };
+export { calculateFlags, formatNumber, parseNumberSafe };

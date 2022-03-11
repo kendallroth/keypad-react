@@ -1,5 +1,5 @@
 import React from "react";
-import { Digits, ExtraKeys, Keys } from "@kendallroth/keypad-react";
+import { KeypadDigits, KeypadExtraKeys, KeypadKeys as TKeypadKeys } from "@kendallroth/keypad-react";
 
 // Components
 import KeypadDigit from "./KeypadDigit";
@@ -14,7 +14,7 @@ type Props = {
   /** Whether keypad is disabled */
   disabled?: boolean;
   /** Keypress handler */
-  onKey: (digit: Keys) => void;
+  onKey: (digit: TKeypadKeys) => void;
 };
 
 const digitKeys = [
@@ -24,7 +24,7 @@ const digitKeys = [
 ];
 
 interface IExtraKeys {
-  type: ExtraKeys | "0";
+  type: KeypadExtraKeys | "0";
   value: string;
 }
 
@@ -52,7 +52,7 @@ const KeypadKeys = (props: Props) => {
               key={digit}
               disabled={disabled || digitsDisabled}
               label={digit}
-              onPress={() => onKey(digit as Digits)}
+              onPress={() => onKey(digit as KeypadDigits)}
             />
           ))}
         </div>

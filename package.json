@@ -5,11 +5,14 @@
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
-    "build": "npm run build:clean && rollup --config ./config/rollup.config.ts",
+    "build": "npm run build:clean && npm run build:prod",
     "build:clean": "rimraf lib",
-    "build:dev": "npm run build:clean && tsc -p ./config/tsconfig.dev.json --watch",
+    "build:prod": "cross-env NODE_ENV=production rollup --config ./config/rollup.config.ts",
+    "build:dev": "npm run build:clean && rollup --config ./config/rollup.config.ts --watch",
     "format": "prettier --write \"{src,test}/**/*.ts\"",
     "lint": "eslint \"{src,test}/**/*.ts\"",
     "prepare": "husky install",
@@ -42,6 +45,7 @@
     "@types/react": "^17.0.39",
     "@typescript-eslint/eslint-plugin": "^5.14.0",
     "@typescript-eslint/parser": "^5.14.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",

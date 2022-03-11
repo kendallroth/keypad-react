@@ -1,10 +1,10 @@
 import { useImperativeHandle, useState } from "react";
 
 // Utilities
-import { parseNumberSafe } from "./keypad.util";
+import { calculateFlags, parseNumberSafe } from "./keypad.util";
 
 // Types
-import { DigitStrings, IKeypad, keyStrings, KeypadHookConfig, Keys } from "./keypad.types";
+import { DigitStrings, IKeypad, keyStrings, KeypadHookConfig, KeypadKeys } from "./keypad.types";
 
 /**
  * Re-usable Keypad logic that tracks state internally, while allowing
@@ -21,6 +21,7 @@ const useKeypad = (config: KeypadHookConfig): IKeypad => {
     maxDigits,
     maxValue,
     ref,
+    removeDecimalOnDelete = false,
     onChange: onChangeProp,
   } = config;
 
@@ -50,7 +51,7 @@ const useKeypad = (config: KeypadHookConfig): IKeypad => {
 
     // Maximum digit calculations must ignore decimals places!
     if (maxDigits) {
-      if (supportsDecimals && input.indexOf(".")) {
+      if (supportsDecimals && input.includes(".")) {
         if (input.split(".")[0].length > maxDigits) return;
       } else {
         if (`${value}`.length > maxDigits) return;
@@ -59,8 +60,13 @@ const useKeypad = (config: KeypadHookConfig): IKeypad => {
 
     debug("Value updated", value, input);
 
+    const flags = calculateFlags(input, {
+      maxDecimalDigits: decimals,
+      maxWholeDigits: maxDigits,
+    });
+
     setValueString(input);
-    onChangeProp?.(value, input);
+    onChangeProp?.(value, input, flags);
   };
 
   /**
@@ -70,7 +76,7 @@ const useKeypad = (config: KeypadHookConfig): IKeypad => {
    *
    * @param key - Key value
    */
-  const onKey = (key: Keys) => {
+  const onKey = (key: KeypadKeys) => {
     debug("Key pressed", key);
     debug("Existing value", valueString);
 
@@ -83,8 +89,8 @@ const useKeypad = (config: KeypadHookConfig): IKeypad => {
       // Removing the last character should set value to zero
       newValueString = newValueString.length <= 1 ? "0" : newValueString.slice(0, -1);
 
-      // Remove decimals they are the last decimal in a string
-      if (newValueString.slice(-1) === ".") {
+      // Optionally remove decimals they are the last decimal in a string (uncommon)
+      if (removeDecimalOnDelete && newValueString.slice(-1) === ".") {
         newValueString = newValueString.slice(0, -1);
       }
     } else if (key === "decimal" && supportsDecimals) {
@@ -117,10 +123,17 @@ const useKeypad = (config: KeypadHookConfig): IKeypad => {
     return valueString;
   };
 
-  /** Manually set/update value */
+  /**
+   * Manually set/update value
+   *
+   * @param value - New value
+   */
   const setValue = (value: number) => {
-    const _valueString = `${value}`;
+    // Ensure value is valid and meets maximum decimal places
+    const [_value, valid] = parseNumberSafe(value, decimals);
+    if (!valid) return;
 
+    const _valueString = `${_value}`;
     onChange(_valueString);
 
     debug("Setting value manually", value);

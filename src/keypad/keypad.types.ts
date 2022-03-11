@@ -4,10 +4,38 @@ export const keyStrings = ["1","2","3","4","5","6","7","8","9","0"] as const; //
 export const keyNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] as const;
 export type DigitStrings = typeof keyStrings[number];
 export type DigitNumbers = typeof keyNumbers[number];
-export type Digits = DigitStrings | DigitNumbers;
-export type ExtraKeys = "delete" | "decimal";
-export type Keys = Digits | ExtraKeys;
 
+/** Keypad digit strings/numbers */
+export type KeypadDigits = DigitStrings | DigitNumbers;
+/** Extra supported keypad key types */
+export type KeypadExtraKeys = "delete" | "decimal";
+/** All supported keypad key types (digits and extra) */
+export type KeypadKeys = KeypadDigits | KeypadExtraKeys;
+
+export interface IFlagCalculationConfig {
+  /** Maximum decimals places */
+  maxDecimalDigits?: number;
+  /** Maximum whole digits */
+  maxWholeDigits?: number;
+}
+
+/** Various keypad flags (intended for UI flags) */
+export interface IKeypadFlags {
+  /** Number of entered decimal places */
+  enteredDecimalDigits: number;
+  /** Number of entered whole digits */
+  enteredWholeDigits: number;
+  /** Whether keypad string has a decimal entered */
+  hasDecimal: boolean;
+  /** Whether keypad has reached maximum decimal places */
+  hasMaxDecimalDigits: boolean;
+  /** Whether keypad has reached maximum digits (whole number only) */
+  hasMaxWholeDigits: boolean;
+  /** Whether keypad has a value */
+  hasValue: boolean;
+}
+
+/** Keypad hook configuration */
 export type KeypadHookConfig = {
   /** Whether debug mode is enabled */
   debug?: boolean;
@@ -40,13 +68,16 @@ export type KeypadHookConfig = {
    *   and can allow parents to call the provided Keypad API (setting values, etc).
    */
   ref?: Ref<IKeypadRef>;
+  /** Whether decimal should be removed when deleting last decimal place */
+  removeDecimalOnDelete?: boolean;
   /**
    * Change handler (parsed value and raw display string)
    *
    * @param value       - Parsed keypad value
    * @param valueString - Raw keypad string
+   * @param flags       - Keypad value flags
    */
-  onChange?: (value: number, valueString: string) => void;
+  onChange?: (value: number, valueString: string, flags: IKeypadFlags) => void;
 };
 
 /** Base Keypad API (shared with hook and ref) */
@@ -82,7 +113,7 @@ export interface IKeypad extends IKeypadApiBase {
    *
    * @param key - Selected key
    */
-  onKey: (key: Keys) => void;
+  onKey: (key: KeypadKeys) => void;
 }
 
 /**

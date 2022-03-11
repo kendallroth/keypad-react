@@ -9,6 +9,8 @@ import peerDepsExternal from "rollup-plugin-peer-deps-external";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const packageJson = require("../package.json");
 
+const production = process.env.NODE_ENV === "production";
+
 export default [
   {
     input: "src/index.ts",
@@ -29,7 +31,7 @@ export default [
       resolve(),
       commonjs(),
       typescript({ tsconfig: "./config/tsconfig.build.json" }),
-      terser(),
+      production && terser(),
     ],
     external: ["react"],
   },

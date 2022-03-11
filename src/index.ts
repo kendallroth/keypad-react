@@ -1,4 +1,10 @@
 export { formatNumber, parseNumberSafe, useKeypad } from "./keypad";
 
 // Types
-export { Digits, ExtraKeys, Keys, IKeypadRef } from "./keypad/keypad.types";
+export {
+  IKeypadFlags,
+  IKeypadRef,
+  KeypadDigits,
+  KeypadExtraKeys,
+  KeypadKeys,
+} from "./keypad/keypad.types";

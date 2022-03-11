@@ -1,5 +1,6 @@
 # Output
 lib
+example/build
 
 # Dependencies
 node_modules
