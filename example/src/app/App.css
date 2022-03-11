@@ -26,7 +26,8 @@ html {
   border-top: 2px solid lightgrey;
 }
 
-.app-actions > .button {
+.app-actions > .button,
+.app-actions > .input {
   margin-left: 16px;
 }
 

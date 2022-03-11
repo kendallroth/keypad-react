@@ -47,7 +47,7 @@ const Keypad = forwardRef<IKeypadRef, Props>((props, ref) => {
       <KeypadKeys
         decimalDisabled={!decimals || flags?.hasDecimal}
         deleteDisabled={!flags?.hasValue}
-        digitsDisabled={flags?.hasMaxWholeDigits || flags?.hasMaxDecimalDigits}
+        digitsDisabled={(!flags?.hasDecimal && flags?.hasMaxWholeDigits) || flags?.hasMaxDecimalDigits}
         disabled={disabled}
         onKey={onKey}
       />
