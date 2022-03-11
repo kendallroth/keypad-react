@@ -83,11 +83,16 @@ const useKeypad = (config: KeypadHookConfig): IKeypad => {
     let newValueString = valueString ?? "0";
     const keyString = key.toString();
     const valueHasDecimal = newValueString.includes(".");
-    const existingDecimalPlaces = valueHasDecimal ? newValueString.split(".")[1].length : 0;
+    const valueIsNegative = newValueString.startsWith("-");
+    const existingDecimalDigits = valueHasDecimal ? newValueString.split(".")[1].length : 0;
 
     if (key === "delete") {
-      // Removing the last character should set value to zero
-      newValueString = newValueString.length <= 1 ? "0" : newValueString.slice(0, -1);
+      newValueString = newValueString.slice(0, -1);
+
+      // Removing the last digit should set value to zero (must also check for sign)
+      if (!newValueString.length || newValueString === "-") {
+        newValueString = "0";
+      }
 
       // Optionally remove the decimal if removing the last decimal place digit (uncommon)
       if (removeDecimalOnDelete && newValueString.slice(-1) === ".") {
@@ -100,9 +105,14 @@ const useKeypad = (config: KeypadHookConfig): IKeypad => {
       newValueString += ".";
     } else if (keyStrings.includes(keyString as DigitStrings)) {
       // Decimal values have a limited number of decimal places
-      if (valueHasDecimal && existingDecimalPlaces >= decimals) return;
+      if (valueHasDecimal && existingDecimalDigits >= decimals) return;
 
       newValueString = newValueString !== "0" ? newValueString + keyString : keyString;
+    } else if (key === "negative") {
+      // Zero should not be negative
+      if (newValueString === "0" || newValueString === "0.") return;
+
+      newValueString = valueIsNegative ? newValueString.slice(1) : `-${newValueString}`;
     } else {
       // Invalid keys should be ignored
       return;

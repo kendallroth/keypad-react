@@ -8,7 +8,7 @@ export type DigitNumbers = typeof keyNumbers[number];
 /** Keypad digit strings/numbers */
 export type KeypadDigits = DigitStrings | DigitNumbers;
 /** Extra supported keypad key types */
-export type KeypadExtraKeys = "delete" | "decimal";
+export type KeypadExtraKeys = "delete" | "decimal" | "negative";
 /** All supported keypad key types (digits and extra) */
 export type KeypadKeys = KeypadDigits | KeypadExtraKeys;
 
@@ -43,11 +43,7 @@ export type KeypadHookConfig = {
   decimals?: number;
   /** Initial keypad value (set on mount) */
   initialValue?: string | number;
-  /**
-   * Whether negative numbers are supported
-   *
-   * NOTE: Negative numbers are currently only possible when setting manually.
-   */
+  /** Whether negative numbers are supported */
   negative?: boolean;
   /**
    * Maximum allowed digits (ie. whole digits)

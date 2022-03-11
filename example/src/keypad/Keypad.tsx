@@ -25,6 +25,7 @@ const Keypad = forwardRef<IKeypadRef, Props>((props, ref) => {
   const { onKey, reset } = useKeypad({
     decimals,
     debug: true,
+    negative: true,
     maxDigits,
     maxValue,
     ref,

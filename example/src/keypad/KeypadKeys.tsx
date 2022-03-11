@@ -30,6 +30,7 @@ interface IExtraKeys {
 
 const extraKeys: IExtraKeys[] = [
   { type: "decimal", value: "•" },
+  // { type: "negative", value: "-" },
   { type: "0", value: "0" },
   { type: "delete", value: "⌫" }
 ];

@@ -19,7 +19,7 @@ Note that the Keypad formatting requires `Number.toLocaleString()`, which may no
 | `debug?`                 | `boolean`                                                         | `false` | Whether debug mode is enabled                                      |
 | `decimals?`              | `number`                                                          | `0`     | Number of supported decimal places                                 |
 | `initialValue?`          | `string \| number`                                                | `0`     | Initial keypad value (will not update!)                            |
-| `negative?`              | `boolean`                                                         | `false` | Whether negative numbers are supported\*                           |
+| `negative?`              | `boolean`                                                         | `false` | Whether negative numbers are supported                             |
 | `maxDigits?`             | `number`                                                          |         | Maximum allowed whole digits                                       |
 | `maxValue?`              | `number`                                                          |         | Maximum allowed value                                              |
 | `ref?`                   | `Ref<IKeypadRef>`                                                 |         | Ref to provide access to limited Keypad functions/values           |
