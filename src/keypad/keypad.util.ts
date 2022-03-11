@@ -1,4 +1,4 @@
-import { IFlagCalculationConfig, IKeypadFlags } from "./keypad.types";
+import { IFlagCalculationConfig, IFormatNumberOptions, IKeypadFlags } from "./keypad.types";
 
 /** Safely parsed number (value and validity) */
 type SafeParsedNumber = [value: number, valid: boolean];
@@ -11,7 +11,7 @@ type SafeParsedNumber = [value: number, valid: boolean];
  * @returns Keypad value flags
  */
 const calculateFlags = (value: string, config?: IFlagCalculationConfig): IKeypadFlags => {
-  const inputParts = value.split(".");
+  const inputParts = value?.split(".") ?? [];
   const hasValue = Boolean(value) && value !== "0";
   const enteredWholeDigits = inputParts[0]?.length ?? 0;
   const enteredDecimalDigits = inputParts[1]?.length ?? 0;
@@ -19,7 +19,7 @@ const calculateFlags = (value: string, config?: IFlagCalculationConfig): IKeypad
   return {
     enteredDecimalDigits,
     enteredWholeDigits,
-    hasDecimal: value.includes("."),
+    hasDecimal: inputParts.length > 1,
     hasMaxDecimalDigits: config?.maxDecimalDigits
       ? enteredDecimalDigits >= config.maxDecimalDigits
       : false,
@@ -38,18 +38,26 @@ const calculateFlags = (value: string, config?: IFlagCalculationConfig): IKeypad
  * @param   options  - 'toLocaleString' formatting options
  * @returns Formatted number
  */
-const formatNumber = (number: string | number, decimals = 2, options = {}) => {
+const formatNumber = (
+  number: string | number,
+  decimals = 2,
+  options: IFormatNumberOptions = {},
+) => {
   // NOTE: Deliberately handle all undefined or invalid numbers as 0!
   number = number || 0;
 
-  return parseFloat(`${number}`).toLocaleString("en-US", {
+  const { commas = false, ...localeOptions } = options;
+
+  const localeString = parseFloat(`${number}`).toLocaleString("en-US", {
     style: "decimal",
     // NOTE: Currency is required even when not formatting as currency!
     currency: "USD",
     maximumFractionDigits: decimals,
     minimumFractionDigits: decimals,
-    ...(options ?? {}),
+    ...localeOptions,
   });
+
+  return commas ? localeString : localeString.replace(/,/g, "");
 };
 
 /**
@@ -60,9 +68,9 @@ const formatNumber = (number: string | number, decimals = 2, options = {}) => {
  * @returns Parsed number and validity
  */
 const parseNumberSafe = (input: string | number, maxDecimals = 2): SafeParsedNumber => {
-  if (!input || isNaN(Number(input))) return [0, false];
-
   try {
+    if (!input || isNaN(Number(input))) return [0, false];
+
     let stringValue = `${input}`;
     // NOTE: Cannot use 'toFixed()' as this rounds decimals if necessary (undesired)!
     const decimalIndex = stringValue.indexOf(".");

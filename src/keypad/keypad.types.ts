@@ -19,6 +19,16 @@ export interface IFlagCalculationConfig {
   maxWholeDigits?: number;
 }
 
+/**
+ * Number formatting options
+ *
+ * NOTE: May also contain 'toLocaleString' options.
+ */
+export interface IFormatNumberOptions {
+  /** Whether formatted numbers should contain commas */
+  commas?: boolean;
+}
+
 /** Various keypad flags (intended for UI flags) */
 export interface IKeypadFlags {
   /** Number of entered decimal places */
