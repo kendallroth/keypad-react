@@ -1,0 +1,9 @@
+# Output
+lib
+
+# Dependencies
+node_modules
+example/node_modules
+
+# Testing
+coverage

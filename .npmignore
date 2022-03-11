@@ -1,0 +1,17 @@
+# Dependencies
+node_modules
+package-lock.json
+
+# Tests
+coverage
+test
+
+# Files
+example
+src
+.eslintrc.js
+.gitignore
+.prettierrc
+CHANGELOG.md
+rollup.config.ts
+tsconfig*

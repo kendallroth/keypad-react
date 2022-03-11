@@ -1,0 +1,17 @@
+/**
+ * Build file to generate/output TS types (not source code)
+ */
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,                                     /* Disable emitting files from a compilation (used for type checking only). */
+    "emitDeclarationOnly": true,                         /* Only output d.ts files and not JavaScript files. */
+    "declaration": true,                                 /* Generate .d.ts files from TypeScript and JavaScript files in your project. */
+    "declarationDir": "./types",                         /* Specify the output directory for generated declaration files. */
+  },
+  "exclude": [
+    "../lib",
+    "../node_modules",
+    "../test/**/*.ts"
+  ]
+}

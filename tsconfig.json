@@ -1,0 +1,45 @@
+/**
+ * Base TS config file to be extended by other configs (only actively supports type-checking)
+ */
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "es2016",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "jsx": "react",                                      /* Specify what JSX code is generated. */
+
+    /* Modules */
+    "module": "esnext",                                  /* Specify what module code is generated. */
+    "moduleResolution": "node",                          /* Specify how TypeScript looks up a file from a given module specifier. */
+    "baseUrl": ".",                                      /* Specify the base directory to resolve non-relative module names. */
+    // "rootDir": ".",                                   /* Specify the root folder within your source files. */
+    "paths": {},                                         /* Specify a set of entries that re-map imports to additional lookup locations. */
+
+    /* Emit */
+    "noEmit": true,                                      /* Disable emitting files from a compilation (used for type checking only). */
+    // "declaration": true,                                 /* Generate .d.ts files from TypeScript and JavaScript files in your project. */
+    // "declarationDir": "./types",                         /* Specify the output directory for generated declaration files. */
+    "outDir": "./lib",                                   /* Specify an output folder for all emitted files. */
+    "sourceMap": true,                                   /* Create source map files for emitted JavaScript files. */
+
+    /* Interop Constraints */
+    // "isolatedModules": true,                          /* Ensure that each file can be safely transpiled without relying on other imports. */
+    "allowSyntheticDefaultImports": true,                /* Allow 'import x from y' when a module doesn't have a default export. */
+    "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */
+    "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
+
+    /* Type Checking */
+    "strict": true,                                      /* Enable all strict type-checking options. */
+    "noImplicitAny": true,                               /* Enable error reporting for expressions and declarations with an implied `any` type.. */
+
+    /* Completeness */
+    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts"
+  ],
+  "exclude": [
+    "lib",
+    "node_modules",
+  ]
+}

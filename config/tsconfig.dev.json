@@ -1,0 +1,15 @@
+/**
+ * Development file for local development
+ */
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,                                     /* Disable emitting files from a compilation (used for type checking only). */
+    "declaration": false                                 /* Generate .d.ts files from TypeScript and JavaScript files in your project. */
+  },
+  "exclude": [
+    "../lib",
+    "../node_modules",
+    "../test/**/*.ts"
+  ]
+}

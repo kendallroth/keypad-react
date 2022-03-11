@@ -1,0 +1,12 @@
+/**
+ * ESLint file to allow linting in non-included files
+ */
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "../.eslintrc.js",
+    "../config/*",
+    "../src/**/*.ts",
+    "../test/**/*.ts"
+  ]
+}
