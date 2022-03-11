@@ -13,6 +13,7 @@ module.exports = {
   },
   rules: {
     "no-console": "warn",
+    "prefer-const": "warn",
     "prettier/prettier": "warn",
     "@typescript-eslint/interface-name-prefix": "off",
     "@typescript-eslint/ban-ts-comment": "off",

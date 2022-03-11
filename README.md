@@ -14,16 +14,17 @@ Note that the Keypad formatting requires `Number.toLocaleString()`, which may no
 
 ### Hook Config
 
-| Property        | Type                                         | Default | Description |
-| --------------- | -------------------------------------------- | ------- | ----------- |
-| `debug?`        | `boolean`                                    | `false` | TODO        |
-| `decimals?`     | `number`                                     | `0`     | TODO        |
-| `initialValue?` | `string \| number`                           | `0`     | TODO        |
-| `negative?`     | `boolean`                                    | `false` | TODO        |
-| `maxDigits?`    | `number`                                     |         | TODO        |
-| `maxValue?`     | `number`                                     |         | TODO        |
-| `ref?`          | `Ref<IKeypadRef>`                            |         | TODO        |
-| `onChange?`     | `(value: string, valueString: string): void` |         | TODO        |
+| Property                 | Type                                         | Default | Description |
+| ------------------------ | -------------------------------------------- | ------- | ----------- |
+| `debug?`                 | `boolean`                                    | `false` | TODO        |
+| `decimals?`              | `number`                                     | `0`     | TODO        |
+| `initialValue?`          | `string \| number`                           | `0`     | TODO        |
+| `negative?`              | `boolean`                                    | `false` | TODO        |
+| `maxDigits?`             | `number`                                     |         | TODO        |
+| `maxValue?`              | `number`                                     |         | TODO        |
+| `ref?`                   | `Ref<IKeypadRef>`                            |         | TODO        |
+| `removeDecimalOnDelete?` | `boolean`                                    | `false` | TODO        |
+| `onChange?`              | `(value: string, valueString: string): void` |         | TODO        |
 
 ### Hook Response
 

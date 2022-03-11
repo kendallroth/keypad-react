@@ -20,7 +20,6 @@ const calculateFlags = (value: string, config?: IFlagCalculationConfig): IKeypad
     enteredDecimalDigits,
     enteredWholeDigits,
     hasDecimal: value.includes("."),
-    // hasMaxDecimalDigits: enteredDecimalDigits >= (config?.maxDecimalDigits ?? 0),
     hasMaxDecimalDigits: config?.maxDecimalDigits
       ? enteredDecimalDigits >= config.maxDecimalDigits
       : false,
@@ -56,16 +55,20 @@ const formatNumber = (number: string | number, decimals = 2, options = {}) => {
 /**
  * Safely parse a numeric string
  *
- * NOTE: Will round the decimal places if necessary (when dropping places)!
- *
  * @param   input       - Numeric input string
  * @param   maxDecimals - Maximum decimal places
  * @returns Parsed number and validity
  */
 const parseNumberSafe = (input: string | number, maxDecimals = 2): SafeParsedNumber => {
   try {
-    const rawValue = parseFloat(`${input}`);
-    const value = parseFloat(rawValue.toFixed(maxDecimals));
+    let stringValue = `${input}`;
+    // NOTE: Cannot use 'toFixed()' as this rounds decimals if necessary (undesired)!
+    const decimalIndex = stringValue.indexOf(".");
+    if (decimalIndex >= 0) {
+      stringValue = stringValue.slice(0, decimalIndex + maxDecimals + 1);
+    }
+
+    const value = parseFloat(stringValue);
     return [value, true];
   } catch {
     return [0, false];

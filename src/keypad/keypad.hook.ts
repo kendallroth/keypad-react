@@ -89,7 +89,7 @@ const useKeypad = (config: KeypadHookConfig): IKeypad => {
       // Removing the last character should set value to zero
       newValueString = newValueString.length <= 1 ? "0" : newValueString.slice(0, -1);
 
-      // Optionally remove decimals they are the last decimal in a string (uncommon)
+      // Optionally remove the decimal if removing the last decimal place digit (uncommon)
       if (removeDecimalOnDelete && newValueString.slice(-1) === ".") {
         newValueString = newValueString.slice(0, -1);
       }
